@@ -1,0 +1,30 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar__link .icon {
+  color: var(--text-sidebar);
+}
+
+.sidebar__link--active .icon {
+  color: var(--color-accent);
+}
+
+.sidebar__link:hover .icon {
+  color: var(--text-inverse);
+}
+
+.stat-card .icon {
+  color: var(--color-primary);
+  margin-bottom: 0.35rem;
+}
