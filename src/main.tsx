@@ -4,9 +4,9 @@ import './index.css'
 import './shared/components/ui.css'
 import './shared/components/AppHeader.css'
 import './shared/icons/icons.css'
-import App from './app/App.jsx'
+import App from './app/App'
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>,

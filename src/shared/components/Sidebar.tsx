@@ -3,9 +3,17 @@ import { Icon } from '../icons/Icon'
 import { Logo } from '../logos/Logo'
 import './Sidebar.css'
 
-const navItems = [
+const navItems: Array<{
+  to: string
+  label: string
+  icon: string
+  end?: boolean
+}> = [
   { to: '/', label: 'Dashboard', icon: 'home', end: true },
   { to: '/cervejas', label: 'Cervejas', icon: 'barril-cheio' },
+  { to: '/tanques', label: 'Tanques', icon: 'tanque-cheio' },
+  { to: '/fermentacao', label: 'Fermentação', icon: 'monitor-dashboard' },
+  { to: '/lotes', label: 'Lotes', icon: 'ticket-confirmation' },
 ]
 
 export default function Sidebar() {
@@ -15,7 +23,7 @@ export default function Sidebar() {
         <Logo name="logo-mark" height={36} className="sidebar__logo" />
         <div>
           <div className="sidebar__title">ArBrain ERP</div>
-          <div className="sidebar__subtitle">Gestão de cervejas</div>
+          <div className="sidebar__subtitle">Gestão fermentativa</div>
         </div>
       </div>
 

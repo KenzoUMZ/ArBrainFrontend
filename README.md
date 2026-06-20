@@ -1,24 +1,58 @@
 # ArBrain Frontend
 
-SPA React com arquitetura **feature-driven** para o ERP de cervejas.
+SPA **React + TypeScript** com arquitetura **feature-driven** para o ERP fermentativo de cervejas.
 
 ## Estrutura
 
 ```text
 src/
-├── app/                  # Router, providers, App root
+├── app/                        # Router, providers, App root
 ├── features/
-│   ├── beers/            # api, hooks, components, pages
+│   ├── beers/                  # api, hooks, pages
+│   ├── tanks/
+│   ├── fermentation/
 │   └── dashboard/
 ├── shared/
-│   ├── api/              # apiClient (axios)
-│   ├── icons/            # componente Icon + estilos
-│   └── components/       # Layout, Sidebar, UI compartilhado
+│   ├── api/                    # apiClient, queryKeys
+│   ├── types/                  # DTOs e enums da API
+│   ├── icons/                  # componente Icon
+│   ├── logos/                  # componente Logo
+│   └── components/             # Layout, Sidebar, estados de UI
 ├── assets/
-│   ├── icons/            # SVGs exportados do Figma
-│   └── logos/            # Logos do Frame 170
-└── index.css             # Paleta de cores e tokens
+│   ├── icons/                  # SVGs exportados do Figma
+│   └── logos/                  # Logos do Frame 170
+└── index.css                   # Paleta de cores e tokens
 ```
+
+Cada feature segue o padrão:
+
+```text
+features/<nome>/
+├── api/<nome>Api.ts      # chamadas HTTP
+├── hooks/use<Nome>.ts    # TanStack Query (queries + mutations)
+└── pages/                # telas da rota
+```
+
+## Integração com a API
+
+| Feature | Endpoints | Hooks |
+|---------|-----------|-------|
+| `beers` | CRUD + parâmetros | `useBeers`, `useBeer`, `useBeerParameters`, `useCreateBeer`, `useUpdateBeer`, `useDeleteBeer`, `useUpsertBeerParameters` |
+| `tanks` | CRUD | `useTanks`, `useTank`, `useCreateTank`, `useUpdateTank`, `useDeleteTank` |
+| `fermentation` | apontamentos + lotes | `useFermentationRecords`, `useFermentationRecord`, `useBatches`, `useBatchHistory`, `useCreateFermentationRecord` |
+| `dashboard` | resumo | `useDashboardSummary` |
+
+Tipos compartilhados em `src/shared/types/api.ts` (DTOs, enums e labels).
+
+## Rotas
+
+| Rota | Página | Status |
+|------|--------|--------|
+| `/` | Dashboard fermentativo | integrado |
+| `/cervejas` | Cadastro de cervejas | placeholder |
+| `/tanques` | Cadastro de tanques | placeholder |
+| `/fermentacao` | Registro de fermentação | placeholder |
+| `/lotes` | Histórico de lotes | placeholder |
 
 ## Paleta
 
@@ -30,8 +64,8 @@ src/
 | `--color-neutral` | `#A4A4A4` | Labels, metadados |
 | `--color-surface` | `#E8E8E8` | Fundo da página |
 | `--color-accent` | `#FFC524` | Destaque, nav ativo |
-| `--color-success` | `#9CDA97` | Estoque OK |
-| `--color-danger` | `#FA9897` | Estoque baixo, erros |
+| `--color-success` | `#9CDA97` | Conformidade OK |
+| `--color-danger` | `#FA9897` | Fora do padrão, erros |
 
 ## Rodar
 
@@ -52,7 +86,7 @@ npm run icons:export   # re-exporta SVGs do .fig
 
 Uso:
 
-```jsx
+```tsx
 import { Icon } from '../shared/icons/Icon'
 
 <Icon name="home" size={20} />
@@ -79,7 +113,7 @@ Variantes:
 
 Uso:
 
-```jsx
+```tsx
 import { Logo } from '../shared/logos/Logo'
 
 <Logo name="logo-mark" height={36} />

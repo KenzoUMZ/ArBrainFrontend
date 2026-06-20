@@ -3,9 +3,12 @@ import AppHeader from './AppHeader'
 import Sidebar from './Sidebar'
 import './Layout.css'
 
-const pageTitles = {
+const pageTitles: Record<string, string> = {
   '/': 'Dashboard',
   '/cervejas': 'Cervejas',
+  '/tanques': 'Tanques',
+  '/fermentacao': 'Fermentação',
+  '/lotes': 'Histórico de Lotes',
 }
 
 export default function Layout() {

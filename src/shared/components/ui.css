@@ -124,3 +124,15 @@
 .stat-card--success .stat-card__value {
   color: color-mix(in srgb, var(--color-success) 70%, var(--color-primary));
 }
+
+.page-placeholder h1 {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.page-placeholder p {
+  margin: 0;
+  color: var(--text-muted);
+}
+

@@ -9,18 +9,29 @@ const logos = import.meta.glob('../../assets/logos/*.svg', {
 
 const logoMap = Object.fromEntries(
   Object.entries(logos).map(([path, svg]) => {
-    const name = path.split('/').pop().replace('.svg', '')
-    return [name, svg]
+    const name = path.split('/').pop()?.replace('.svg', '') ?? ''
+    return [name, svg as string]
   }),
 )
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { logoNames }
 
-/**
- * Logo ArBrain exportada do Figma (Frame 170).
- * @param {'logo-arbrain' | 'logo-mark' | 'logo-wordmark'} name
- */
-export function Logo({ name = 'logo-mark', height = 36, className = '', title = 'ArBrain' }) {
+export type LogoName = 'logo-arbrain' | 'logo-mark' | 'logo-wordmark'
+
+interface LogoProps {
+  name?: LogoName
+  height?: number
+  className?: string
+  title?: string
+}
+
+export function Logo({
+  name = 'logo-mark',
+  height = 36,
+  className = '',
+  title = 'ArBrain',
+}: LogoProps) {
   const svg = logoMap[name]
 
   if (!svg) {
@@ -28,7 +39,9 @@ export function Logo({ name = 'logo-mark', height = 36, className = '', title = 
   }
 
   const viewBoxMatch = svg.match(/viewBox="([^"]+)"/)
-  const [, , vbWidth = 1, vbHeight = 1] = (viewBoxMatch?.[1] ?? '0 0 1 1').split(/\s+/).map(Number)
+  const [, , vbWidth = 1, vbHeight = 1] = (viewBoxMatch?.[1] ?? '0 0 1 1')
+    .split(/\s+/)
+    .map(Number)
   const width = Math.round((height * vbWidth) / vbHeight)
 
   const sizedSvg = svg

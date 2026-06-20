@@ -8,30 +8,35 @@ const icons = import.meta.glob('../../assets/icons/*.svg', {
 
 const iconMap = Object.fromEntries(
   Object.entries(icons).map(([path, svg]) => {
-    const name = path.split('/').pop().replace('.svg', '')
-    return [name, svg]
+    const name = path.split('/').pop()?.replace('.svg', '') ?? ''
+    return [name, svg as string]
   }),
 )
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { iconNames }
 
-export function Icon({ name, size = 20, className = '', title }) {
+interface IconProps {
+  name: string
+  size?: number
+  className?: string
+  title?: string
+}
+
+export function Icon({ name, size = 20, className = '', title }: IconProps) {
   const svg = iconMap[name]
 
   if (!svg) {
     return null
   }
 
-  const sizedSvg = svg.replace(
-    '<svg ',
-    `<svg aria-hidden="${title ? 'false' : 'true'}" ${title ? '' : ''} `,
-  ).replace(
-    /width="[^"]*"/,
-    `width="${size}"`,
-  ).replace(
-    /height="[^"]*"/,
-    `height="${size}"`,
-  )
+  const sizedSvg = svg
+    .replace(
+      '<svg ',
+      `<svg aria-hidden="${title ? 'false' : 'true'}" `,
+    )
+    .replace(/width="[^"]*"/, `width="${size}"`)
+    .replace(/height="[^"]*"/, `height="${size}"`)
 
   return (
     <span
