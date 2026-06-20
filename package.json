@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "icons:export": "node scripts/export-figma-icons.mjs"
+    "icons:export": "node scripts/export-figma-icons.mjs",
+    "logos:export": "node scripts/export-figma-logos.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.0",

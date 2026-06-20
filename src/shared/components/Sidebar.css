@@ -20,13 +20,6 @@
 .sidebar__logo {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent);
-  color: var(--color-ink);
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 1.1rem;
 }
 
 .sidebar__title {

@@ -15,7 +15,8 @@ src/
 │   ├── icons/            # componente Icon + estilos
 │   └── components/       # Layout, Sidebar, UI compartilhado
 ├── assets/
-│   └── icons/            # SVGs exportados do Figma
+│   ├── icons/            # SVGs exportados do Figma
+│   └── logos/            # Logos do Frame 170
 └── index.css             # Paleta de cores e tokens
 ```
 
@@ -59,3 +60,28 @@ import { Icon } from '../shared/icons/Icon'
 ```
 
 Lista completa em `src/assets/icons/iconNames.js` (93 ícones).
+
+## Logos (Figma)
+
+Logos extraídas do **Frame 170** (seção Logos) do arquivo `Padrões ArBrain - Desafio.fig`.
+
+```bash
+npm run logos:export   # re-exporta SVGs do .fig
+```
+
+Variantes:
+
+| Nome | Uso |
+|------|-----|
+| `logo-arbrain` | Ícone colorido (#334355 + detalhes brancos) |
+| `logo-mark` | Marca (ícone branco, ideal para fundo escuro) |
+| `logo-wordmark` | Tipografia "ArBrain" (branca) |
+
+Uso:
+
+```jsx
+import { Logo } from '../shared/logos/Logo'
+
+<Logo name="logo-mark" height={36} />
+<Logo name="logo-wordmark" height={24} />
+```

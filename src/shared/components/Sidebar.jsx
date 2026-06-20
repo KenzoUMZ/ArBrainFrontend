@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { Icon } from '../icons/Icon'
+import { Logo } from '../logos/Logo'
 import './Sidebar.css'
 
 const navItems = [
@@ -11,7 +12,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">
-        <div className="sidebar__logo">AB</div>
+        <Logo name="logo-mark" height={36} className="sidebar__logo" />
         <div>
           <div className="sidebar__title">ArBrain ERP</div>
           <div className="sidebar__subtitle">Gestão de cervejas</div>
