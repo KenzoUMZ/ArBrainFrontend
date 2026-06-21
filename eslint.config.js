@@ -23,7 +23,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.{js,mjs}'],
+    files: ['**/*.{js,mjs}', 'vite.config.ts'],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,
