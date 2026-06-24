@@ -14,6 +14,24 @@
 
 .sidebar__link .icon {
   color: var(--text-sidebar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  /* normaliza ícones com viewBox não-quadrada */
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.sidebar__link .icon svg {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px;
+  max-height: 20px;
+  display: block;
 }
 
 .sidebar__link--active .icon {
@@ -24,7 +42,15 @@
   color: var(--text-inverse);
 }
 
-.stat-card .icon {
+.stat-card__icon .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary);
-  margin-bottom: 0.35rem;
+  margin: 0;
+  line-height: 0;
+}
+
+.stat-card__icon .icon svg {
+  display: block;
 }

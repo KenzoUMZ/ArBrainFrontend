@@ -1,28 +1,22 @@
-import { mkdirSync, writeFileSync, readFileSync } from 'fs'
+import { mkdirSync, writeFileSync, readFileSync, unlinkSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { parseFig, nodeId, resolveVectorNodePaths } from 'openfig-core'
 
 const FIG_FILE = 'Padrões ArBrain - Desafio.fig'
 const OUTPUT_DIR = 'src/assets/logos'
-const LOGOS_FRAME_ID = '207:2152' // Frame 170 — Logos
+const LOGOS_FRAME_ID = '207:2152' // Frame 170
 
-/** Nomes estáveis para variantes exportadas do Frame 170. */
-const NAME_OVERRIDES = {
-  '207:2153': 'logo-arbrain',
-  '207:2156': 'logo-mark',
-  '207:2157': 'logo-wordmark',
-}
+/**
+ * Três itens irmãos dentro do Frame 170 (layout horizontal no Figma).
+ * Cada entrada gera exatamente um SVG — nunca exportamos o frame pai inteiro.
+ */
+const LOGO_ITEMS = [
+  { id: '207:2153', fileName: 'logo-colored', label: 'LogoArbrain (ícone colorido)' },
+  { id: '207:2156', fileName: 'logo-icon-white', label: 'VectorArBrain (ícone branco)' },
+  { id: '207:2157', fileName: 'logo-wordmark-white', label: 'VectorArBrain (tipografia branca)' },
+]
 
 const doc = parseFig(new Uint8Array(readFileSync(FIG_FILE)))
-
-function slugify(name) {
-  return name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '') || 'logo'
-}
 
 function paintToFill(paints) {
   if (!paints?.length) return 'currentColor'
@@ -41,8 +35,7 @@ function collectShapeNodes(node, acc = []) {
   if (['VECTOR', 'BOOLEAN_OPERATION', 'ELLIPSE', 'RECTANGLE', 'STAR', 'LINE'].includes(node.type)) {
     acc.push(node)
   }
-  const id = nodeId(node)
-  for (const child of doc.childrenMap.get(id) || []) {
+  for (const child of doc.childrenMap.get(nodeId(node)) || []) {
     collectShapeNodes(child, acc)
   }
   return acc
@@ -67,8 +60,8 @@ function nodeToPaths(node) {
   }
 }
 
-function exportLogoNode(node) {
-  const shapes = collectShapeNodes(node)
+function exportSingleItem(node) {
+  const shapes = node.type === 'VECTOR' ? [node] : collectShapeNodes(node)
   const allPaths = shapes.flatMap(nodeToPaths)
   if (!allPaths.length) return null
 
@@ -85,39 +78,58 @@ function exportLogoNode(node) {
 
 const frame = doc.nodeMap.get(LOGOS_FRAME_ID)
 if (!frame) {
-  console.error('Logos frame (Frame 170) not found')
+  console.error('Frame 170 (Logos) não encontrado no arquivo Figma.')
   process.exit(1)
 }
 
 mkdirSync(OUTPUT_DIR, { recursive: true })
 
-const children = doc.childrenMap.get(LOGOS_FRAME_ID) || []
 const exported = []
 
-for (const child of children) {
-  if (!['FRAME', 'GROUP', 'VECTOR'].includes(child.type)) continue
+for (const item of LOGO_ITEMS) {
+  const node = doc.nodeMap.get(item.id)
+  if (!node) {
+    console.warn(`Nó ${item.id} não encontrado — ${item.label}`)
+    continue
+  }
 
-  const svg = exportLogoNode(child)
-  if (!svg) continue
+  const svg = exportSingleItem(node)
+  if (!svg) {
+    console.warn(`Sem paths exportáveis — ${item.label} (${item.id})`)
+    continue
+  }
 
-  const childId = nodeId(child)
-  const baseName = NAME_OVERRIDES[childId] ?? slugify(child.name)
-  const fileName = `${baseName}.svg`
-
+  const fileName = `${item.fileName}.svg`
   writeFileSync(join(OUTPUT_DIR, fileName), svg)
-  exported.push({ name: child.name, fileName, id: childId })
+  exported.push({
+    ...item,
+    fileName,
+    figmaName: node.name,
+    pathCount: (svg.match(/<path/g) ?? []).length,
+  })
+}
+
+const PRESERVED_LOGOS = ['logo-white.svg', 'logo-filled.svg']
+
+const allowed = new Set([...exported.map((e) => e.fileName), ...PRESERVED_LOGOS])
+for (const file of readdirSync(OUTPUT_DIR)) {
+  if (file.endsWith('.svg') && !allowed.has(file)) {
+    unlinkSync(join(OUTPUT_DIR, file))
+    console.log(`Removido SVG obsoleto: ${file}`)
+  }
 }
 
 const indexContent = exported
   .map(({ fileName }) => fileName.replace('.svg', ''))
-  .sort()
   .map((name) => `  '${name}',`)
   .join('\n')
 
 writeFileSync(
   'src/assets/logos/logoNames.js',
-  `// Auto-generated from Figma — Frame 170 (Logos)\nexport const logoNames = [\n${indexContent}\n]\n`,
+  `// Auto-generated from Figma — Frame 170 (3 itens separados)\nexport const logoNames = [\n${indexContent}\n]\n`,
 )
 
-console.log(`Exported ${exported.length} logos to ${OUTPUT_DIR}`)
-exported.forEach(({ fileName, name, id }) => console.log(`  ${fileName} ← ${name} (${id})`))
+console.log(`Exportados ${exported.length} logos (itens separados do Frame 170):`)
+exported.forEach(({ fileName, label, figmaName, id, pathCount }) => {
+  console.log(`  ${fileName} ← ${figmaName} [${pathCount} path(s)] — ${label}`)
+})
