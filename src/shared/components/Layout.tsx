@@ -1,29 +1,46 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
+import { findNavItem } from '../navigation/navItems'
+import AnimatedOutlet from './AnimatedOutlet'
 import AppHeader from './AppHeader'
+import { PageSearchProvider } from './PageSearchContext'
 import Sidebar from './Sidebar'
 import './Layout.css'
 
-const pageTitles: Record<string, string> = {
-  '/': 'Dashboard',
-  '/cervejas': 'Cervejas',
-  '/tanques': 'Tanques',
-  '/fermentacao': 'Fermentação',
-  '/lotes': 'Histórico de Lotes',
+function LayoutMain() {
+  const { pathname } = useLocation()
+  const navItem = findNavItem(pathname)
+  const contentRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0, left: 0 })
+  }, [pathname])
+
+  return (
+    <div className="layout__main">
+      {navItem && (
+        <div key={pathname} className="app-header-transition">
+          <AppHeader
+            title={navItem.title}
+            description={navItem.description}
+            icon={navItem.icon}
+          />
+        </div>
+      )}
+      <main ref={contentRef} className="layout__content">
+        <AnimatedOutlet />
+      </main>
+    </div>
+  )
 }
 
 export default function Layout() {
-  const { pathname } = useLocation()
-  const title = pageTitles[pathname] ?? 'ArBrain ERP'
-
   return (
-    <div className="layout">
-      <Sidebar />
-      <div className="layout__main">
-        <AppHeader title={title} meta="Demo técnico" />
-        <main className="layout__content">
-          <Outlet />
-        </main>
+    <PageSearchProvider>
+      <div className="layout">
+        <Sidebar />
+        <LayoutMain />
       </div>
-    </div>
+    </PageSearchProvider>
   )
 }

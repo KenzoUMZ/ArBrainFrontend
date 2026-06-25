@@ -17,12 +17,7 @@ const logoMap = Object.fromEntries(
 // eslint-disable-next-line react-refresh/only-export-components
 export { logoNames }
 
-/** Variantes de logo (Frame 170 + sidebar). */
-export type LogoName =
-  | 'logo-colored'
-  | 'logo-icon-white'
-  | 'logo-white'
-  | 'logo-wordmark-white'
+export type LogoName = 'logo-icon' | 'logo-text' | 'logo-white'
 
 interface LogoProps {
   name?: LogoName
@@ -32,7 +27,7 @@ interface LogoProps {
 }
 
 export function Logo({
-  name = 'logo-icon-white',
+  name = 'logo-white',
   height = 36,
   className = '',
   title = 'ArBrain',
