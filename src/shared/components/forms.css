@@ -435,11 +435,33 @@ button:focus-visible {
   gap: 0.5rem;
 }
 
-.batch-list__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.batch-list__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) auto;
   gap: 1rem;
+  align-items: center;
+  padding: 0 1rem 0.25rem;
+}
+
+.batch-list__header-cell {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-muted);
+  padding: 0.35rem 0;
+}
+
+.batch-list__header-cell--count {
+  justify-self: end;
+  text-align: right;
+}
+
+.batch-list__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) auto;
+  gap: 1rem;
+  align-items: center;
   width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid var(--border);
@@ -448,6 +470,25 @@ button:focus-visible {
   cursor: pointer;
   text-align: left;
   transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.batch-list__item-batch {
+  font-weight: 700;
+  color: var(--color-primary);
+  min-width: 0;
+}
+
+.batch-list__item-beer {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.batch-list__item-count {
+  justify-self: end;
 }
 
 .batch-list__item:hover {

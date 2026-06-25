@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
+import BatchHistoryPage from '../features/batches/pages/BatchHistoryPage'
 import BeerListPage from '../features/beers/pages/BeerListPage'
 import DashboardPage from '../features/dashboard/pages/DashboardPage'
-import BatchHistoryPage from '../features/fermentation/pages/BatchHistoryPage'
 import FermentationRecordsPage from '../features/fermentation/pages/FermentationRecordsPage'
 import TankListPage from '../features/tanks/pages/TankListPage'
 import Layout from '../shared/components/Layout'

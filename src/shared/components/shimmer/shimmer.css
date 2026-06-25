@@ -111,6 +111,10 @@
   pointer-events: none;
 }
 
+.batch-list__header--skeleton {
+  pointer-events: none;
+}
+
 .batch-list__item--skeleton:hover {
   border-color: var(--border);
   background: var(--bg-card);

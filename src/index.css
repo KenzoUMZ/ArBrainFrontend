@@ -95,7 +95,8 @@ table {
 .stat-card__value,
 .table-pagination,
 .timeline-item__meta,
-.batch-list__meta {
+.batch-list__meta,
+.batch-list__item-beer {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1;
 }
