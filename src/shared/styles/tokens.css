@@ -1,0 +1,154 @@
+:root {
+  /* -------------------------------------------------------------------------
+   * Brand palette
+   * ------------------------------------------------------------------------- */
+  --color-ink: #1d1d2d;
+  --color-primary: #063852;
+  --color-muted: #acbbcd;
+  --color-neutral: #a4a4a4;
+  --color-surface: #e8e8e8;
+  --color-accent: #ffc524;
+  --color-success: #9cda97;
+  --color-danger: #fa9897;
+  --color-warning: var(--color-accent);
+  --color-white: #ffffff;
+
+  /* -------------------------------------------------------------------------
+   * Semantic colors
+   * ------------------------------------------------------------------------- */
+  --bg-page: var(--color-surface);
+  --bg-sidebar: var(--color-primary);
+  --bg-card: var(--color-white);
+  --bg-input: var(--color-white);
+  --bg-glass: rgba(255, 255, 255, 0.82);
+  --text-primary: var(--color-ink);
+  --text-inverse: var(--color-white);
+  --text-muted: var(--color-neutral);
+  --text-sidebar: var(--color-muted);
+  --text-on-primary: var(--color-white);
+  --border: var(--color-muted);
+  --border-strong: var(--color-neutral);
+  --border-subtle: color-mix(in srgb, var(--color-muted) 45%, white);
+  --border-focus: color-mix(in srgb, var(--color-ink) 30%, var(--color-muted));
+
+  /* -------------------------------------------------------------------------
+   * Status color variations
+   * ------------------------------------------------------------------------- */
+  --color-success-soft: color-mix(in srgb, var(--color-success) 35%, white);
+  --color-success-strong: color-mix(in srgb, var(--color-success) 70%, var(--color-primary));
+  --color-success-border: color-mix(in srgb, var(--color-success) 35%, white);
+
+  --color-warning-soft: color-mix(in srgb, var(--color-accent) 35%, white);
+  --color-warning-strong: color-mix(in srgb, var(--color-accent) 80%, var(--color-ink));
+  --color-warning-border: color-mix(in srgb, var(--color-accent) 30%, white);
+
+  --color-danger-soft: color-mix(in srgb, var(--color-danger) 35%, white);
+  --color-danger-strong: color-mix(in srgb, var(--color-danger) 70%, var(--color-ink));
+  --color-danger-border: color-mix(in srgb, var(--color-danger) 30%, white);
+
+  --color-primary-soft: color-mix(in srgb, var(--color-primary) 10%, white);
+  --color-primary-muted: color-mix(in srgb, var(--color-primary) 8%, white);
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 12%, white);
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 20%, white);
+
+  /* -------------------------------------------------------------------------
+   * Typography — families
+   * ------------------------------------------------------------------------- */
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', monospace;
+
+  /* -------------------------------------------------------------------------
+   * Typography — scale
+   * ------------------------------------------------------------------------- */
+  --text-2xs: 0.7rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.85rem;
+  --text-md: 0.9rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+
+  /* -------------------------------------------------------------------------
+   * Typography — weights
+   * ------------------------------------------------------------------------- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* -------------------------------------------------------------------------
+   * Typography — line heights
+   * ------------------------------------------------------------------------- */
+  --leading-tight: 1.15;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* -------------------------------------------------------------------------
+   * Typography — letter spacing
+   * ------------------------------------------------------------------------- */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.03em;
+  --tracking-wider: 0.04em;
+  --tracking-caps: 0.06em;
+
+  /* -------------------------------------------------------------------------
+   * Spacing scale
+   * ------------------------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.35rem;
+  --space-3: 0.5rem;
+  --space-4: 0.75rem;
+  --space-5: 1rem;
+  --space-6: 1.25rem;
+  --space-7: 1.5rem;
+  --space-8: 2rem;
+  --space-9: 2.5rem;
+
+  /* -------------------------------------------------------------------------
+   * Layout
+   * ------------------------------------------------------------------------- */
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 72px;
+  --header-height: 64px;
+  --content-max-width: 1280px;
+
+  /* -------------------------------------------------------------------------
+   * Radii
+   * ------------------------------------------------------------------------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* -------------------------------------------------------------------------
+   * Elevation
+   * ------------------------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(29, 29, 45, 0.04);
+  --shadow-sm: 0 2px 8px rgba(29, 29, 45, 0.06), 0 1px 2px rgba(29, 29, 45, 0.04);
+  --shadow-md: 0 8px 24px rgba(29, 29, 45, 0.08);
+  --shadow-lg: 0 12px 32px rgba(29, 29, 45, 0.12);
+  --shadow-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow: var(--shadow-md);
+
+  /* -------------------------------------------------------------------------
+   * Motion
+   * ------------------------------------------------------------------------- */
+  --duration-fast: 150ms;
+  --duration-normal: 220ms;
+  --duration-slow: 280ms;
+  --ease-standard: ease;
+  --ease-out: ease-out;
+
+  /* -------------------------------------------------------------------------
+   * Z-index
+   * ------------------------------------------------------------------------- */
+  --z-sticky: 10;
+  --z-header: 20;
+  --z-sidebar: 30;
+  --z-dialog: 100;
+  --z-toast: 200;
+}
