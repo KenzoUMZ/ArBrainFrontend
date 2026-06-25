@@ -1,14 +1,20 @@
 import apiClient from '../../../shared/api/apiClient'
+import { buildListParams } from '../../../shared/sort'
+import type { ListQueryOptions } from '../../../shared/sort'
 import type {
-  BatchHistoryDto,
-  BatchSummaryDto,
   CreateFermentationRecordDto,
   FermentationRecordDto,
+  PagedResult,
 } from '../../../shared/types'
 
 export const fermentationApi = {
-  getAll: async (): Promise<FermentationRecordDto[]> => {
-    const { data } = await apiClient.get<FermentationRecordDto[]>('/api/fermentation-records')
+  getAll: async (options?: ListQueryOptions): Promise<PagedResult<FermentationRecordDto>> => {
+    const { data } = await apiClient.get<PagedResult<FermentationRecordDto>>(
+      '/api/fermentation-records',
+      {
+        params: buildListParams(options),
+      },
+    )
     return data
   },
 
@@ -23,20 +29,6 @@ export const fermentationApi = {
     const { data } = await apiClient.post<FermentationRecordDto>(
       '/api/fermentation-records',
       payload,
-    )
-    return data
-  },
-
-  getBatches: async (): Promise<BatchSummaryDto[]> => {
-    const { data } = await apiClient.get<BatchSummaryDto[]>(
-      '/api/fermentation-records/batches',
-    )
-    return data
-  },
-
-  getBatchHistory: async (batchNumber: string): Promise<BatchHistoryDto> => {
-    const { data } = await apiClient.get<BatchHistoryDto>(
-      `/api/fermentation-records/batches/${encodeURIComponent(batchNumber)}`,
     )
     return data
   },
