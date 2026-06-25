@@ -2,28 +2,33 @@ import { useCallback, useState } from 'react'
 import type { SortDirection, SortState } from './types'
 
 export function useSort(defaultField: string, defaultDirection: SortDirection = 'asc') {
-  const [sortField, setSortField] = useState(defaultField)
-  const [sortDir, setSortDir] = useState<SortDirection>(defaultDirection)
+  const [sort, setSort] = useState<SortState>({
+    field: defaultField,
+    direction: defaultDirection,
+  })
 
-  const toggleSort = useCallback((field: string, alphabetical = false) => {
-    if (alphabetical) {
-      setSortField(field)
-      setSortDir('asc')
-      return
-    }
-
-    setSortField((currentField) => {
-      if (currentField === field) {
-        setSortDir((currentDir) => (currentDir === 'asc' ? 'desc' : 'asc'))
-        return currentField
+  const toggleSort = useCallback((field: string) => {
+    setSort((current) => {
+      if (current.field === field) {
+        return {
+          field,
+          direction: current.direction === 'asc' ? 'desc' : 'asc',
+        }
       }
 
-      setSortDir('asc')
-      return field
+      return { field, direction: 'asc' }
     })
   }, [])
 
-  const sort: SortState = { field: sortField, direction: sortDir }
+  const resetSort = useCallback((field: string, direction: SortDirection = 'asc') => {
+    setSort({ field, direction })
+  }, [])
 
-  return { sortField, sortDir, sort, toggleSort }
+  return {
+    sortField: sort.field,
+    sortDir: sort.direction,
+    sort,
+    toggleSort,
+    resetSort,
+  }
 }

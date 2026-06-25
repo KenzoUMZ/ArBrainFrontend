@@ -5,9 +5,10 @@ interface SortableHeaderProps {
   field: string
   sortField: string
   sortDir: SortDirection
-  onSort: (field: string, alphabetical?: boolean) => void
-  /** Colunas de nome: apenas destaque visual, sem seta de direção; sempre A→Z. */
-  alphabetical?: boolean
+  onSort: (field: string) => void
+  /** Render as table header cell or div (for non-table lists). */
+  as?: 'th' | 'div'
+  className?: string
 }
 
 export default function SortableHeader({
@@ -16,41 +17,38 @@ export default function SortableHeader({
   sortField,
   sortDir,
   onSort,
-  alphabetical = false,
+  as: Tag = 'th',
+  className = '',
 }: SortableHeaderProps) {
   const isActive = sortField === field
 
   return (
-    <th
-      scope="col"
+    <Tag
+      scope={Tag === 'th' ? 'col' : undefined}
+      role={Tag === 'div' ? 'button' : undefined}
+      tabIndex={Tag === 'div' ? 0 : undefined}
       className={[
         'sortable-header',
         isActive && 'sortable-header--active',
-        alphabetical && 'sortable-header--alphabetical',
+        className,
       ]
         .filter(Boolean)
         .join(' ')}
-      onClick={() => onSort(field, alphabetical)}
+      onClick={() => onSort(field)}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          onSort(field)
+        }
+      }}
       aria-sort={
-        isActive
-          ? alphabetical || sortDir === 'asc'
-            ? 'ascending'
-            : 'descending'
-          : 'none'
+        isActive ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'
       }
     >
       <span className="sortable-header__label">{label}</span>
-      <span
-        className={[
-          'sortable-header__indicator',
-          alphabetical && 'sortable-header__indicator--reserved',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        aria-hidden="true"
-      >
-        {alphabetical ? '↕' : isActive ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}
+      <span className="sortable-header__indicator" aria-hidden="true">
+        {isActive ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}
       </span>
-    </th>
+    </Tag>
   )
 }
