@@ -1,1 +1,1 @@
-export const logoNames = ['logo-white']
+export const logoNames = ['logo-icon', 'logo-text', 'logo-white']
