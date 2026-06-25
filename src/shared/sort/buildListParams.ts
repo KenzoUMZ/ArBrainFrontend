@@ -22,5 +22,11 @@ export function buildListParams(options?: ListQueryOptions) {
     if (compliance) params.complianceStatus = compliance
   }
 
+  if (options.deletedOnly) {
+    params.deletedOnly = 'true'
+  } else if (options.deletedOnly === false) {
+    params.deletedOnly = 'false'
+  }
+
   return Object.keys(params).length > 0 ? params : undefined
 }

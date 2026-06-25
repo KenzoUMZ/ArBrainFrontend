@@ -53,6 +53,8 @@ export interface BeerDto {
   name: string
   style: BeerStyle
   createdAt: string
+  updatedAt: string
+  deletedAt: string | null
   parameters: BeerFermentationParametersDto | null
 }
 
@@ -73,6 +75,8 @@ export interface TankDto {
   name: string
   capacityLiters: number
   createdAt: string
+  updatedAt: string
+  deletedAt: string | null
 }
 
 export interface CreateTankDto {

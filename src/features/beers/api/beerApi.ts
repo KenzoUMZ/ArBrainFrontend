@@ -1,15 +1,20 @@
 import apiClient from '../../../shared/api/apiClient'
+import { buildListParams } from '../../../shared/sort'
+import type { ListQueryOptions } from '../../../shared/sort'
 import type {
   BeerDto,
   BeerFermentationParametersDto,
   CreateBeerDto,
+  PagedResult,
   UpdateBeerDto,
   UpsertBeerParametersDto,
 } from '../../../shared/types'
 
 export const beerApi = {
-  getAll: async (): Promise<BeerDto[]> => {
-    const { data } = await apiClient.get<BeerDto[]>('/api/beers')
+  getAll: async (options?: ListQueryOptions): Promise<PagedResult<BeerDto>> => {
+    const { data } = await apiClient.get<PagedResult<BeerDto>>('/api/beers', {
+      params: buildListParams(options),
+    })
     return data
   },
 
@@ -30,6 +35,10 @@ export const beerApi = {
 
   delete: async (id: string): Promise<void> => {
     await apiClient.delete(`/api/beers/${id}`)
+  },
+
+  restore: async (id: string): Promise<void> => {
+    await apiClient.post(`/api/beers/${id}/restore`)
   },
 
   getParameters: async (id: string): Promise<BeerFermentationParametersDto> => {

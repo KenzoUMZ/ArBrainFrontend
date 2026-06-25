@@ -1,6 +1,6 @@
+import { Icon } from '../icons/Icon'
 import Button from './Button'
 import Dialog, { type DialogIconTone } from './Dialog'
-import { Icon } from '../icons/Icon'
 
 interface ConfirmDialogProps {
   open: boolean
@@ -40,7 +40,7 @@ export default function ConfirmDialog({
     }
   }
 
-  const confirmIcon = confirmVariant === 'danger' ? 'trash' : 'checkverde'
+  const confirmIcon = confirmVariant === 'danger' ? 'trash' : 'check'
   const dialogIcon = titleIcon ?? (confirmVariant === 'danger' ? 'trash' : 'entrada-estoque')
   const dialogIconTone = titleIconTone ?? (confirmVariant === 'danger' ? 'danger' : 'success')
 

@@ -14,4 +14,5 @@ export interface ListQueryOptions {
   page?: number
   pageSize?: number
   complianceStatus?: FermentationComplianceStatus
+  deletedOnly?: boolean
 }
