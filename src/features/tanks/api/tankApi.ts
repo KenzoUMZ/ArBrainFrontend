@@ -1,9 +1,13 @@
 import apiClient from '../../../shared/api/apiClient'
-import type { CreateTankDto, TankDto, UpdateTankDto } from '../../../shared/types'
+import { buildListParams } from '../../../shared/sort'
+import type { ListQueryOptions } from '../../../shared/sort'
+import type { CreateTankDto, PagedResult, TankDto, UpdateTankDto } from '../../../shared/types'
 
 export const tankApi = {
-  getAll: async (): Promise<TankDto[]> => {
-    const { data } = await apiClient.get<TankDto[]>('/api/tanks')
+  getAll: async (options?: ListQueryOptions): Promise<PagedResult<TankDto>> => {
+    const { data } = await apiClient.get<PagedResult<TankDto>>('/api/tanks', {
+      params: buildListParams(options),
+    })
     return data
   },
 
@@ -24,5 +28,9 @@ export const tankApi = {
 
   delete: async (id: string): Promise<void> => {
     await apiClient.delete(`/api/tanks/${id}`)
+  },
+
+  restore: async (id: string): Promise<void> => {
+    await apiClient.post(`/api/tanks/${id}/restore`)
   },
 }
