@@ -1,0 +1,169 @@
+@keyframes shimmer-slide {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.shimmer,
+.content-refetching::after {
+  --shimmer-duration: 1.5s;
+}
+
+.shimmer {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-surface) 94%, white) 0%,
+    color-mix(in srgb, var(--color-surface) 78%, white) 50%,
+    color-mix(in srgb, var(--color-surface) 94%, white) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-slide var(--shimmer-duration) linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+.shimmer--md {
+  border-radius: var(--radius-md);
+}
+
+.shimmer--pill {
+  border-radius: 999px;
+}
+
+.shimmer--circle {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-section-title {
+  margin-bottom: 0.75rem;
+}
+
+.loading-surface {
+  min-height: 12rem;
+}
+
+.skeleton-enter {
+  animation: skeleton-fade-in 280ms ease-out;
+}
+
+.content-enter {
+  animation: content-fade-in 220ms ease-out;
+}
+
+@keyframes skeleton-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes content-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.content-refetching {
+  position: relative;
+}
+
+.content-refetching::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, white 60%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-slide var(--shimmer-duration) linear infinite;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.stat-card__value-skeleton {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.batch-list__meta-skeleton {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.batch-list__item--skeleton {
+  cursor: default;
+  pointer-events: none;
+}
+
+.batch-list__item--skeleton:hover {
+  border-color: var(--border);
+  background: var(--bg-card);
+}
+
+.timeline-skeleton__subtitle {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.timeline--skeleton {
+  --shimmer-duration: 1.5s;
+}
+
+/* linha vertical anima como shimmer vertical */
+.timeline--skeleton::before {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-surface) 94%, white) 0%,
+    color-mix(in srgb, var(--color-surface) 75%, white) 50%,
+    color-mix(in srgb, var(--color-surface) 94%, white) 100%
+  );
+  background-size: 100% 300%;
+  animation: shimmer-vertical var(--shimmer-duration) linear infinite;
+}
+
+@keyframes shimmer-vertical {
+  0%   { background-position: 0 200%; }
+  100% { background-position: 0 -200%; }
+}
+
+/* dot anima com o mesmo shimmer horizontal */
+.timeline-item__dot--skeleton {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-surface) 94%, white) 0%,
+    color-mix(in srgb, var(--color-surface) 75%, white) 50%,
+    color-mix(in srgb, var(--color-surface) 94%, white) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-slide var(--shimmer-duration) linear infinite;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--border);
+}
+
+.timeline-item--skeleton .timeline-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* casa com o espaçamento real de .timeline-item__obs */
+.timeline-item__obs-skeleton {
+  display: block;
+  margin-top: 0.35rem;
+}
