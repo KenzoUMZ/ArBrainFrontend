@@ -61,6 +61,7 @@ export default function BeerListPage() {
   const [selectedBeer, setSelectedBeer] = useState<BeerDto | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<BeerDto | null>(null)
   const [restoreTarget, setRestoreTarget] = useState<BeerDto | null>(null)
+  const [parametersPromptBeer, setParametersPromptBeer] = useState<BeerDto | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isRestoring, setIsRestoring] = useState(false)
   const [deletingId, setDeletingId] = useState<string>()
@@ -93,6 +94,13 @@ export default function BeerListPage() {
   function openParameters(beer: BeerDto) {
     setSelectedBeer(beer)
     setDialogMode('parameters')
+  }
+
+  function confirmConfigureParameters() {
+    if (!parametersPromptBeer) return
+
+    openParameters(parametersPromptBeer)
+    setParametersPromptBeer(null)
   }
 
   async function confirmDelete() {
@@ -197,9 +205,10 @@ export default function BeerListPage() {
             submitLabel="Cadastrar"
             onCancel={closeDialog}
             onSubmit={async (payload) => {
-              await createBeer.mutateAsync(payload)
+              const created = await createBeer.mutateAsync(payload)
               toast.success('Cerveja cadastrada com sucesso.')
               closeDialog()
+              setParametersPromptBeer(created)
             }}
           />
         )}
@@ -261,6 +270,22 @@ export default function BeerListPage() {
         confirmVariant="primary"
         isLoading={isRestoring}
         onConfirm={confirmRestore}
+      />
+
+      <ConfirmDialog
+        open={parametersPromptBeer !== null}
+        onOpenChange={(open) => {
+          if (!open) setParametersPromptBeer(null)
+        }}
+        title="Configurar parâmetros?"
+        highlightName={parametersPromptBeer?.name}
+        description="Deseja configurar os parâmetros fermentativos desta cerveja agora?"
+        confirmLabel="Configurar parâmetros"
+        cancelLabel="Agora não"
+        confirmVariant="primary"
+        titleIcon="settings"
+        titleIconTone="accent"
+        onConfirm={confirmConfigureParameters}
       />
 
       <TableToolbar
