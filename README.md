@@ -48,11 +48,11 @@ Tipos compartilhados em `src/shared/types/api.ts` (DTOs, enums e labels).
 
 | Rota | Página | Status |
 |------|--------|--------|
-| `/` | Dashboard fermentativo | integrado |
-| `/cervejas` | Cadastro de cervejas | placeholder |
-| `/tanques` | Cadastro de tanques | placeholder |
-| `/fermentacao` | Registro de fermentação | placeholder |
-| `/lotes` | Histórico de lotes | placeholder |
+| `/` | Dashboard fermentativo (4 indicadores + ícones) | implementado |
+| `/cervejas` | CRUD de cervejas + parâmetros fermentativos | implementado |
+| `/tanques` | CRUD de tanques | implementado |
+| `/fermentacao` | Formulário de apontamento + listagem | implementado |
+| `/lotes` | Seletor de lotes + timeline de apontamentos | implementado |
 
 ## Paleta
 
@@ -103,19 +103,17 @@ Logos extraídas do **Frame 170** (seção Logos) do arquivo `Padrões ArBrain -
 npm run logos:export   # re-exporta SVGs do .fig
 ```
 
-Variantes:
+Variantes (3 SVGs separados do Frame 170):
 
-| Nome | Uso |
-|------|-----|
-| `logo-arbrain` | Ícone colorido (#334355 + detalhes brancos) |
-| `logo-mark` | Marca (ícone branco, ideal para fundo escuro) |
-| `logo-wordmark` | Tipografia "ArBrain" (branca) |
+| Nome | Figma | Uso |
+|------|-------|-----|
+| `logo-sidebar` | VectorArBrain (export manual) | Ícone + nome — topo do menu lateral |
+| `logo-colored` | LogoArbrain | Ícone colorido (#334355 + detalhes brancos) |
+| `logo-icon-white` | VectorArBrain | Ícone branco (fundo escuro) |
+| `logo-wordmark-white` | VectorArBrain | Tipografia "ArBrain" (branca) |
 
-Uso:
+Uso na sidebar:
 
 ```tsx
-import { Logo } from '../shared/logos/Logo'
-
-<Logo name="logo-mark" height={36} />
-<Logo name="logo-wordmark" height={24} />
+<Logo name="logo-sidebar" height={36} />
 ```
