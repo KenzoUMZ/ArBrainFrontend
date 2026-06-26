@@ -2,16 +2,14 @@ import { getApiErrorMessage } from '../../../shared/api/apiClient'
 import ErrorState from '../../../shared/components/ErrorState'
 import ScrollFade from '../../../shared/components/ScrollFade'
 import TableToolbar from '../../../shared/components/TableToolbar'
-import {
-  BatchListSkeleton,
-  TimelineSkeleton,
-} from '../../../shared/components/shimmer'
+import { TimelineSkeleton } from '../../../shared/components/shimmer'
+import { useMinimumVisible } from '../../../shared/hooks/useMinimumVisible'
 import { usePageSearchTerm } from '../../../shared/search'
 import { useSort } from '../../../shared/sort'
-import { useMinimumVisible } from '../../../shared/hooks/useMinimumVisible'
 import BatchSelector, { BATCH_LIST_DEFAULT_SORT } from '../components/BatchSelector'
 import BatchTimeline from '../components/BatchTimeline'
 import { useBatchHistory, useBatches, useSelectedBatch } from '../hooks/useBatches'
+import './BatchHistoryPage.css'
 
 export default function BatchHistoryPage() {
   const search = usePageSearchTerm()
@@ -75,18 +73,15 @@ export default function BatchHistoryPage() {
             className="page-layout-split__scroll"
             aria-label="Lista de lotes"
           >
-            {showBatchesSkeleton ? (
-              <BatchListSkeleton items={8} />
-            ) : (
-              <BatchSelector
-                batches={batches}
-                selectedBatch={selectedBatch}
-                sortField={sortField}
-                sortDir={sortDir}
-                onSort={toggleSort}
-                onSelect={setSelectedBatch}
-              />
-            )}
+            <BatchSelector
+              batches={batches}
+              selectedBatch={selectedBatch}
+              sortField={sortField}
+              sortDir={sortDir}
+              onSort={toggleSort}
+              onSelect={setSelectedBatch}
+              isRefreshing={showBatchesSkeleton}
+            />
           </ScrollFade>
         </section>
 

@@ -33,6 +33,36 @@ export function complianceFilterChipClass(status: FermentationComplianceStatus):
   return map[status]
 }
 
+export function batchListItemClass(status: FermentationComplianceStatus): string {
+  const map: Record<FermentationComplianceStatus, string> = {
+    [FermentationComplianceStatus.WithinStandard]: 'batch-list__item--within',
+    [FermentationComplianceStatus.RequiresAttention]: 'batch-list__item--attention',
+    [FermentationComplianceStatus.OutOfStandard]: 'batch-list__item--out',
+  }
+
+  return map[status]
+}
+
+export function complianceBadgeClass(status: FermentationComplianceStatus): string {
+  const map: Record<FermentationComplianceStatus, string> = {
+    [FermentationComplianceStatus.WithinStandard]: 'badge--success',
+    [FermentationComplianceStatus.RequiresAttention]: 'badge--warning',
+    [FermentationComplianceStatus.OutOfStandard]: 'badge--danger',
+  }
+
+  return map[status]
+}
+
+export function complianceDotClass(status: FermentationComplianceStatus): string {
+  const map: Record<FermentationComplianceStatus, string> = {
+    [FermentationComplianceStatus.WithinStandard]: 'compliance-dot--success',
+    [FermentationComplianceStatus.RequiresAttention]: 'compliance-dot--warning',
+    [FermentationComplianceStatus.OutOfStandard]: 'compliance-dot--danger',
+  }
+
+  return map[status]
+}
+
 function evaluateMetric(value: number, min: number, max: number): MetricStatus {
   if (value < min || value > max) {
     return 'out'

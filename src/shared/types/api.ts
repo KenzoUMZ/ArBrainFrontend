@@ -120,6 +120,7 @@ export interface BatchSummaryDto {
   batchNumber: string
   beerName: string
   recordCount: number
+  complianceStatus: FermentationComplianceStatus
 }
 
 export interface BatchHistoryDto {

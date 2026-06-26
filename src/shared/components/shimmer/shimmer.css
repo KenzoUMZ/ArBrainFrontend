@@ -111,8 +111,11 @@
   pointer-events: none;
 }
 
-.batch-list__header--skeleton {
-  pointer-events: none;
+.batch-list__item--skeleton .batch-list__item-batch,
+.batch-list__item--skeleton .batch-list__item-beer,
+.batch-list__item--skeleton .batch-list__item-status,
+.batch-list__item--skeleton .batch-list__item-count {
+  min-width: 0;
 }
 
 .batch-list__item--skeleton:hover {
