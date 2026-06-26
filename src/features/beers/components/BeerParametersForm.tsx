@@ -5,6 +5,7 @@ import { FormField, TextInput } from '../../../shared/components/FormField'
 import { Icon } from '../../../shared/icons/Icon'
 import type { BeerFermentationParametersDto, UpsertBeerParametersDto } from '../../../shared/types'
 
+/** Valores iniciais sugeridos quando a cerveja ainda não possui parâmetros salvos. */
 const DEFAULT_PARAMS: BeerFermentationParametersDto = {
   minTemperature: 18,
   maxTemperature: 22,

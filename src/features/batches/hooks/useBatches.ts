@@ -36,6 +36,7 @@ function resolveSelection(
 ): string | null {
   if (batches.length === 0) return null
 
+  // Mantém a seleção atual quando o lote ainda existe na lista filtrada.
   if (current && batches.some((batch) => batch.batchNumber === current)) {
     return current
   }
@@ -43,6 +44,7 @@ function resolveSelection(
   return batches[0].batchNumber
 }
 
+/** Restaura o lote selecionado da sessão e sincroniza com a lista carregada. */
 export function useSelectedBatch(batches: BatchSummaryDto[], batchesReady: boolean) {
   const [selectedBatch, setSelectedBatchState] = useState<string | null>(() =>
     readPersistedBatchSelection(),

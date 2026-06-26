@@ -5,7 +5,7 @@ import CompliancePreview from '../../../shared/components/CompliancePreview'
 import { FormField, SelectInput, TextAreaInput, TextInput } from '../../../shared/components/FormField'
 import { OPTION_LIST_PAGE_SIZE } from '../../../shared/config/pagination'
 import { Icon } from '../../../shared/icons/Icon'
-import type { CreateFermentationRecordDto } from '../../../shared/types'
+import type { BeerDto, CreateFermentationRecordDto, TankDto } from '../../../shared/types'
 import { toDateTimeLocalValue } from '../../../shared/utils/format'
 import { useBeers } from '../../beers/hooks/useBeers'
 import { useTanks } from '../../tanks/hooks/useTanks'
@@ -23,10 +23,14 @@ export default function FermentationRecordForm({
 }: FermentationRecordFormProps) {
   const { data: beerPage } = useBeers({ pageSize: OPTION_LIST_PAGE_SIZE })
   const { data: tankPage } = useTanks({ pageSize: OPTION_LIST_PAGE_SIZE })
-  const beers = beerPage?.items ?? []
-  const tanks = tankPage?.items ?? []
+  const beers: BeerDto[] = beerPage?.items ?? []
+  const tanks: TankDto[] = tankPage?.items ?? []
 
-  const beersWithParams = beers.filter((b) => b.parameters)
+  // Apontamentos exigem parâmetros fermentativos cadastrados na cerveja (regra do backend).
+  const beersWithParams = beers.filter(
+    (beer): beer is BeerDto & { parameters: NonNullable<BeerDto['parameters']> } =>
+      beer.parameters !== null,
+  )
 
   const [registeredAt, setRegisteredAt] = useState(toDateTimeLocalValue())
   const [beerId, setBeerId] = useState('')

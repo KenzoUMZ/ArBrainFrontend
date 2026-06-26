@@ -23,6 +23,7 @@ export default function FermentationRecordsPage() {
   const search = usePageSearchTerm()
   const toast = useToast()
   const [searchParams, setSearchParams] = useSearchParams()
+  // Filtro vindo do dashboard via ?compliance=WithinStandard|RequiresAttention|OutOfStandard.
   const complianceFilter = parseComplianceParam(searchParams.get('compliance'))
   const [page, setPage] = useState(1)
   const { sortField, sortDir, toggleSort } = useSort(

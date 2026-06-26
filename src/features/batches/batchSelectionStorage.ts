@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'arbrain:selected-batch'
 
+/** Persiste o lote selecionado por aba (sessionStorage) para manter o contexto ao recarregar. */
 export function readPersistedBatchSelection(): string | null {
   try {
     return sessionStorage.getItem(STORAGE_KEY)

@@ -4,8 +4,10 @@ import {
   type BeerFermentationParametersDto,
 } from '../types'
 
+/** Utilitários de conformidade fermentativa — espelham as regras do backend. */
 export type ComplianceParamKey = keyof typeof FermentationComplianceStatus
 
+/** Margem de 10% nas extremidades da faixa aceitável — espelha o backend. */
 const ATTENTION_MARGIN_RATIO = 0.1
 
 type MetricStatus = 'within' | 'near' | 'out'
@@ -15,6 +17,7 @@ export function parseComplianceParam(
 ): FermentationComplianceStatus | undefined {
   if (!value) return undefined
 
+  // Aceita o nome do enum na URL (ex.: ?compliance=WithinStandard).
   const entry = Object.entries(FermentationComplianceStatus).find(([name]) => name === value)
   return entry ? (entry[1] as FermentationComplianceStatus) : undefined
 }
@@ -73,6 +76,7 @@ function evaluateMetric(value: number, min: number, max: number): MetricStatus {
     return value === min ? 'within' : 'out'
   }
 
+  // Valores próximos aos limites disparam "Requer atenção" mesmo dentro da faixa.
   const margin = range * ATTENTION_MARGIN_RATIO
   const nearMin = value <= min + margin
   const nearMax = value >= max - margin

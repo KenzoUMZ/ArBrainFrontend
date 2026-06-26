@@ -7,6 +7,7 @@ import { fermentationApi } from '../api/fermentationApi'
 
 function complianceQueryKey(status?: FermentationComplianceStatus): string {
   if (status === undefined) return ''
+  // Nome do enum na query string (ex.: WithinStandard) para compor a cache key.
   return Object.entries(FermentationComplianceStatus).find(([, value]) => value === status)?.[0] ?? ''
 }
 
@@ -56,6 +57,7 @@ export function useCreateFermentationRecord() {
     mutationFn: (payload: CreateFermentationRecordDto) =>
       fermentationApi.create(payload),
     onSuccess: () => {
+      // Novo apontamento altera dashboard, lotes e listagem de fermentação.
       queryClient.invalidateQueries({ queryKey: queryKeys.fermentationRecords.all })
       queryClient.invalidateQueries({ queryKey: queryKeys.batches.all })
       queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary })

@@ -61,6 +61,7 @@ export default function BeerListPage() {
   const [selectedBeer, setSelectedBeer] = useState<BeerDto | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<BeerDto | null>(null)
   const [restoreTarget, setRestoreTarget] = useState<BeerDto | null>(null)
+  /** Cerveja recém-criada aguardando confirmação para abrir o formulário de parâmetros. */
   const [parametersPromptBeer, setParametersPromptBeer] = useState<BeerDto | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isRestoring, setIsRestoring] = useState(false)

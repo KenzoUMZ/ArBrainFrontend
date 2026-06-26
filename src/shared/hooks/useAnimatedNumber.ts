@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+/** Animação numérica para métricas do dashboard (contagem progressiva). */
 interface UseAnimatedNumberOptions {
   duration?: number
   delay?: number

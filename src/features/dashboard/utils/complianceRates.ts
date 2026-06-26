@@ -13,6 +13,7 @@ export function buildComplianceRates(summary: DashboardSummaryDto): ComplianceRa
 
   const total = summary.totalRecords
 
+  // Percentuais usados na barra e nos cards secundários do dashboard.
   return {
     withinPercent: (summary.withinStandardCount / total) * 100,
     attentionPercent: (summary.requiresAttentionCount / total) * 100,
