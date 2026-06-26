@@ -8,8 +8,9 @@ import ComplianceSummary, {
   buildComplianceSummaryProps,
 } from '../components/ComplianceSummary'
 import ComplianceSummarySkeleton from '../components/ComplianceSummarySkeleton'
+import DashboardStatCard from '../components/DashboardStatCard'
 import { useDashboardSummary } from '../hooks/useDashboard'
-import { buildComplianceRates, formatCompliancePercent } from '../utils/complianceRates'
+import { buildComplianceRates } from '../utils/complianceRates'
 import './DashboardPage.css'
 
 const stats = [
@@ -85,24 +86,15 @@ export default function DashboardPage() {
 
             <div className="stat-grid">
               {stats.map((stat) => (
-                <Link
+                <DashboardStatCard
                   key={stat.key}
+                  label={stat.label}
+                  icon={stat.icon}
+                  className={stat.className}
                   to={stat.to}
-                  className={`stat-card stat-card--link ${stat.className}`.trim()}
-                >
-                  <span className="stat-card__icon">
-                    <Icon name={stat.icon} size={22} />
-                  </span>
-                  <div className="stat-card__body">
-                    <div className="stat-card__label">{stat.label}</div>
-                    <div className="stat-card__value">{summary[stat.key]}</div>
-                    {rates && stat.rateKey ? (
-                      <div className="stat-card__meta">
-                        {formatCompliancePercent(rates[stat.rateKey])}% do total
-                      </div>
-                    ) : null}
-                  </div>
-                </Link>
+                  value={summary[stat.key]}
+                  ratePercent={rates && stat.rateKey ? rates[stat.rateKey] : undefined}
+                />
               ))}
             </div>
 

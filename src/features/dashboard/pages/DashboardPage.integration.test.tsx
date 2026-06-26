@@ -77,7 +77,9 @@ describe('DashboardPage integration', () => {
     await userEvent.click(screen.getByRole('button', { name: /Tentar novamente/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('3')).toBeInTheDocument()
+      const totalLinks = screen.getAllByRole('link', { name: /Total de apontamentos/i })
+      const latest = totalLinks[totalLinks.length - 1]
+      expect(latest.querySelector('.stat-card__value')).toHaveTextContent('3')
     })
 
     expect(attempts).toBeGreaterThanOrEqual(2)
